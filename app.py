@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_restful import Api , Resource
 
 
@@ -10,19 +10,18 @@ students = []
 
 class Item(Resource):
     def get(self, name):
-        for student in students:
-            if student['name'] == name:
-                return student
+        student = filter(lambda x: x['name'==name, students])
         return {'Student': None}, 404
 
     
     def post(self, name):
-        student = {'students':name, 'Fee':25000}
+        #data = request.get_json()
+        student = {'students':name, 'fee': 25000}
         students.append(student)
         return student, 201
 
 api.add_resource(Item,'/student/<string:name>')
 
-app.run(port=5022, debug=True)
+app.run(port=5001, debug=True)
 
 
