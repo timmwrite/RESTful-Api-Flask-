@@ -1,27 +1,34 @@
-from flask import Flask, request
-from flask_restful import Api , Resource
+import os
+from flask import Flask
+from flask_restful import Resource, Api
 
 
 app = Flask(__name__)
 
 api = Api(app)
 
-students = []
+Items = []
 
 class Item(Resource):
     def get(self, name):
-        student = filter(lambda x: x['name'==name, students])
-        return {'Student': None}, 404
+        for item in Items:
+            if ['name'] == name:
+                return item
+            else:
+                return{'Hey': None}, 404
+                
+    def post(self, name):
+        item = {'student': name, 'price': 2000}
+        Items.append(item)
+        return item, 201
+    
+    
+
+
+api.add_resource(Item,'/item/<string:name>')
+
+if __name__ == '__main__':
+    app.run(port=4000, debug=True)
 
     
-    def post(self, name):
-        #data = request.get_json()
-        student = {'students':name, 'fee': 25000}
-        students.append(student)
-        return student, 201
-
-api.add_resource(Item,'/student/<string:name>')
-
-app.run(port=5001, debug=True)
-
 
